@@ -124,26 +124,23 @@ public class BusinessHandler extends SimpleChannelInboundHandler<HttpObject> {
 			 * 
 			 * new RegisterHandler(ctx, parmMap, content).process(); return; }
 			 */
-			// v1
 			else if ("/subscribedList".equals(accessPath)) {
 				new DataCacheHandler(ctx, parmMap, content).organizeSubscribedList();
 				return;
-			}
-			// v1
-			else if ("/tabsList".equals(accessPath)) {
+			} else if ("/tabsList".equals(accessPath)) {
 				new DataCacheHandler(ctx, parmMap, content).organizeTabsList();
 				return;
-			}
-			// v1
-			else if ("/recommendList".equals(accessPath)) {
+			} else if ("/recommendList".equals(accessPath)) {
 				new DataCacheHandler(ctx, parmMap, content).organizeRecommendSubscribeList();
 				return;
-				// v1
 			} else if ("/completeList".equals(accessPath)) {
 				// 全部列表
 				new CompleteHandler(ctx, parmMap, content).process();
 				return;
-				// v1
+			} else if ("/aidtype".equals(accessPath)) {
+				// aid 类型
+				new CardDataHandler(ctx, parmMap, content).pressInAidType();
+				return;
 			} else if ("/starList".equals(accessPath)) {
 				// 星座卡片数据
 				new CardDataHandler(ctx, parmMap, content).pressInStar();
@@ -160,17 +157,33 @@ public class BusinessHandler extends SimpleChannelInboundHandler<HttpObject> {
 				// 足球和篮球
 				new CardDataHandler(ctx, parmMap, content).pressInFootBasket();
 				return;
-			} else if ("/aidtype".equals(accessPath)) {
-				// aid 类型
-				new CardDataHandler(ctx, parmMap, content).pressInAidType();
-				return;
 			} else if ("/almanacZip".equals(accessPath)) {
 				// 黄历
 				new CardDataHandler(ctx, parmMap, content).pressInAlmanacZip();
 				return;
 			} else if ("/festivalZip".equals(accessPath)) {
-				// 黄历
+				// 节日
 				new CardDataHandler(ctx, parmMap, content).pressInFestivalZip();
+				return;
+			} else if ("/lottery".equals(accessPath)) {
+				// 彩票
+				new CardDataHandler(ctx, parmMap, content).pressInLottery();
+				return;
+			} else if ("/newsList".equals(accessPath)) {
+				// 资讯
+				new CardDataHandler(ctx, parmMap, content).pressInNews();
+				return;
+			} else if ("/sceneList".equals(accessPath)) {
+				// 场景
+				new CardDataHandler(ctx, parmMap, content).pressInScene();
+				return;
+			} else if ("/filmList".equals(accessPath)) {
+				// 电影
+				new CardDataHandler(ctx, parmMap, content).pressInFilm();
+				return;
+			} else if ("/picture".equals(accessPath)) {
+				// 一天美图
+				new CardDataHandler(ctx, parmMap, content).pressInPicture();
 				return;
 			}
 			// } else if ("/videoList".equals(accessPath)) {

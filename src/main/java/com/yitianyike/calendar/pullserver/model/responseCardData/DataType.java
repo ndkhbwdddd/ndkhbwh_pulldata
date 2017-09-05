@@ -5,6 +5,16 @@ public class DataType {
 	private String tree_id;
 	private String data_type;
 
+	private String tree_name;
+
+	public String getTree_name() {
+		return tree_name;
+	}
+
+	public void setTree_name(String tree_name) {
+		this.tree_name = tree_name;
+	}
+
 	public String getTree_id() {
 		return tree_id;
 	}

@@ -73,6 +73,18 @@ public class EnumConstants {
 
 	public static final String MESSAGE_VERIFY = "我通过了你的好友验证请求，现在我们可以开始聊天了";
 
+	// 类型码=========================================================
+
+	// 黄历
+	public static final int ALMANAC = 6;
+	// 节日
+	public static final int FESTIVAL = 7;
+	// 彩票
+	public static final int LOTTERY = 9;
+	// 电影
+	public static final int FILM = 8;
+	// 壹天美图
+	public static final int PICTURE = 10;
 	public static final String COLOR_NONE = "\033[0m";
 	public static final String COLOR_BLACK = "\033[0;30m";
 	public static final String COLOR_L_BLACK = "\033[1;30m";

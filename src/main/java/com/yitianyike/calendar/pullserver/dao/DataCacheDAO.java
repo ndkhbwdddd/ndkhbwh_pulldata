@@ -32,4 +32,7 @@ public interface DataCacheDAO {
 
 	int[] insertDataCacheList(String cacheKey, List<DataCache> list);
 
+	//删除某个aid缓存
+	void deleteDataCache(String string);
+
 }

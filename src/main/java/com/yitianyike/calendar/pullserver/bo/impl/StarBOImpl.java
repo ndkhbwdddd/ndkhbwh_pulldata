@@ -65,7 +65,7 @@ public class StarBOImpl implements StarBO {
 				responseData.put("healthy", Integer.parseInt(star.getHealthy()) / 10);
 				responseData.put("job", Integer.parseInt(star.getJob()) * 2);
 				responseData.put("love", Integer.parseInt(star.getLove()) * 2);
-
+				responseData.put("unique_type", 0);
 				//
 				dc.setValue(JSONObject.toJSONString(responseData));
 				list.add(dc);

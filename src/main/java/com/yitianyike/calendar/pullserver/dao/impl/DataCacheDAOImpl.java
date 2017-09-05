@@ -113,4 +113,14 @@ public class DataCacheDAOImpl extends BaseDAO implements DataCacheDAO {
 		return null;
 	}
 
+	@Override
+	public void deleteDataCache(String savekey) {
+		StringBuilder deleteSbSql = new StringBuilder();
+		deleteSbSql.append("DELETE FROM `data_cache`  WHERE cache_key=:cache_key");
+		Map<String, Object> deleteMap = new HashMap<String, Object>();
+		deleteMap.put("cache_key", savekey);
+		this.getNamedParameterJdbcTemplate().update(deleteSbSql.toString(), deleteMap);
+
+	}
+
 }

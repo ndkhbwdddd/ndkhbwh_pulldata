@@ -6,6 +6,33 @@ public class ChanneRelevance {
 	private int tree_id;
 	private String alias_name;
 	private int data_type;
+	private int show_number;
+	private int data_style;
+	private String tree_name;
+
+	public String getTree_name() {
+		return tree_name;
+	}
+
+	public void setTree_name(String tree_name) {
+		this.tree_name = tree_name;
+	}
+
+	public int getData_style() {
+		return data_style;
+	}
+
+	public void setData_style(int data_style) {
+		this.data_style = data_style;
+	}
+
+	public int getShow_number() {
+		return show_number;
+	}
+
+	public void setShow_number(int show_number) {
+		this.show_number = show_number;
+	}
 
 	public int getData_type() {
 		return data_type;

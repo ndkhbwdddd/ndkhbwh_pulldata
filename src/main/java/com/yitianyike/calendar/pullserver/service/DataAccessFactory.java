@@ -13,8 +13,14 @@ import com.yitianyike.calendar.pullserver.bo.AlmanacZipBO;
 import com.yitianyike.calendar.pullserver.bo.CompleteBO;
 import com.yitianyike.calendar.pullserver.bo.ControlDriveBO;
 import com.yitianyike.calendar.pullserver.bo.DataCacheBO;
+import com.yitianyike.calendar.pullserver.bo.FestivalZipBO;
+import com.yitianyike.calendar.pullserver.bo.FilmBO;
 import com.yitianyike.calendar.pullserver.bo.FootBasketBO;
+import com.yitianyike.calendar.pullserver.bo.LotteryBO;
+import com.yitianyike.calendar.pullserver.bo.NewsBO;
+import com.yitianyike.calendar.pullserver.bo.PictureBO;
 import com.yitianyike.calendar.pullserver.bo.RecommendSubscribeListBO;
+import com.yitianyike.calendar.pullserver.bo.SceneBO;
 import com.yitianyike.calendar.pullserver.bo.SportCardDataBO;
 import com.yitianyike.calendar.pullserver.bo.StarBO;
 import com.yitianyike.calendar.pullserver.bo.SubscribedListBO;
@@ -74,6 +80,12 @@ public class DataAccessFactory {
 		dataHolder.put("footBasketBO", (FootBasketBO) mysqlCmsCtxXml.getBean("footBasketBO"));
 		dataHolder.put("aidTypeBO", (AidTypeBO) mysqlCmsCtxXml.getBean("aidTypeBO"));
 		dataHolder.put("almanacZipBO", (AlmanacZipBO) mysqlCmsCtxXml.getBean("almanacZipBO"));
+		dataHolder.put("festivalZipBO", (FestivalZipBO) mysqlCmsCtxXml.getBean("festivalZipBO"));
+		dataHolder.put("newsBO", (NewsBO) mysqlCmsCtxXml.getBean("newsBO"));
+		dataHolder.put("sceneBO", (SceneBO) mysqlCmsCtxXml.getBean("sceneBO"));
+		dataHolder.put("lotteryBO", (LotteryBO) mysqlCmsCtxXml.getBean("lotteryBO"));
+		dataHolder.put("filmBO", (FilmBO) mysqlCmsCtxXml.getBean("filmBO"));
+		dataHolder.put("pictureBO", (PictureBO) mysqlCmsCtxXml.getBean("pictureBO"));
 		log.info("init Data Access Objects[Mysql User] over.");
 	}
 
@@ -93,6 +105,5 @@ public class DataAccessFactory {
 	public static Map<String, Object> dataHolder() {
 		return dataHolder;
 	}
-
 
 }

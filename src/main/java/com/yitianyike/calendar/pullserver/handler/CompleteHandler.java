@@ -15,12 +15,6 @@ import net.sf.json.JSONObject;
 import com.yitianyike.calendar.pullserver.bo.CompleteBO;
 import com.yitianyike.calendar.pullserver.service.DataAccessFactory;
 
-/**
- * 全部（包，栏目）
- * 
- * @author shiminghang
- * 
- */
 public class CompleteHandler {
 	private CompleteBO completeBO = (CompleteBO) DataAccessFactory.dataHolder()
 			.get("completeBO");

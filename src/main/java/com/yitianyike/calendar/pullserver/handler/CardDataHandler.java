@@ -17,7 +17,13 @@ import com.yitianyike.calendar.pullserver.bo.AidTypeBO;
 import com.yitianyike.calendar.pullserver.bo.AlmanacBO;
 import com.yitianyike.calendar.pullserver.bo.AlmanacZipBO;
 import com.yitianyike.calendar.pullserver.bo.ControlDriveBO;
+import com.yitianyike.calendar.pullserver.bo.FestivalZipBO;
+import com.yitianyike.calendar.pullserver.bo.FilmBO;
 import com.yitianyike.calendar.pullserver.bo.FootBasketBO;
+import com.yitianyike.calendar.pullserver.bo.LotteryBO;
+import com.yitianyike.calendar.pullserver.bo.NewsBO;
+import com.yitianyike.calendar.pullserver.bo.PictureBO;
+import com.yitianyike.calendar.pullserver.bo.SceneBO;
 import com.yitianyike.calendar.pullserver.bo.StarBO;
 import com.yitianyike.calendar.pullserver.bo.TodayOnHistoryBO;
 import com.yitianyike.calendar.pullserver.bo.VideoBO;
@@ -36,7 +42,12 @@ public class CardDataHandler {
 	private FootBasketBO footBasketBO = (FootBasketBO) DataAccessFactory.dataHolder().get("footBasketBO");
 	private AidTypeBO aidTypeBO = (AidTypeBO) DataAccessFactory.dataHolder().get("aidTypeBO");
 	private AlmanacZipBO almanacZipBO = (AlmanacZipBO) DataAccessFactory.dataHolder().get("almanacZipBO");
-
+	private FestivalZipBO festivalZipBO = (FestivalZipBO) DataAccessFactory.dataHolder().get("festivalZipBO");
+	private NewsBO newsBO = (NewsBO) DataAccessFactory.dataHolder().get("newsBO");
+	private SceneBO sceneBO = (SceneBO) DataAccessFactory.dataHolder().get("sceneBO");
+	private LotteryBO lotteryBO = (LotteryBO) DataAccessFactory.dataHolder().get("lotteryBO");
+	private FilmBO filmBO = (FilmBO) DataAccessFactory.dataHolder().get("filmBO");
+	private PictureBO pictureBO = (PictureBO) DataAccessFactory.dataHolder().get("pictureBO");
 	private Map<String, String> parmMap;
 	private ChannelHandlerContext ctx;
 	private String content;
@@ -231,7 +242,132 @@ public class CardDataHandler {
 
 	public void pressInFestivalZip() {
 
-		List<DataCache> pressInTodayOnHistory = almanacZipBO.pressInAlmanacZip(parmMap);
+		List<DataCache> pressInTodayOnHistory = festivalZipBO.pressInFestivalZip(parmMap);
+		Map<String, Object> response = new HashMap<String, Object>();
+
+		// 显示返回
+		List<Map<String, String>> responseDatas = new ArrayList<Map<String, String>>();
+
+		for (DataCache dc : pressInTodayOnHistory) {
+			Map<String, String> rMap = new HashMap<String, String>();
+			rMap.put("key", dc.getKey());
+			rMap.put("field", dc.getField());
+			rMap.put("value", dc.getValue());
+			responseDatas.add(rMap);
+		}
+		response.put("mes", "success");
+		response.put("code", 0);
+		response.put("data", responseDatas);
+
+		FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, io.netty.handler.codec.http.HttpResponseStatus.OK,
+				Unpooled.wrappedBuffer(JSONObject.fromObject(response).toString().getBytes()));
+		ResponseGenerator.sendHttpResponse(ctx, res);
+
+	}
+
+	public void pressInNews() {
+
+		List<DataCache> pressInTodayOnHistory = newsBO.pressInNews(parmMap);
+		Map<String, Object> response = new HashMap<String, Object>();
+
+		// 显示返回
+		List<Map<String, String>> responseDatas = new ArrayList<Map<String, String>>();
+
+		for (DataCache dc : pressInTodayOnHistory) {
+			Map<String, String> rMap = new HashMap<String, String>();
+			rMap.put("key", dc.getKey());
+			rMap.put("field", dc.getField());
+			rMap.put("value", dc.getValue());
+			responseDatas.add(rMap);
+		}
+		response.put("mes", "success");
+		response.put("code", 0);
+		response.put("data", responseDatas);
+
+		FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, io.netty.handler.codec.http.HttpResponseStatus.OK,
+				Unpooled.wrappedBuffer(JSONObject.fromObject(response).toString().getBytes()));
+		ResponseGenerator.sendHttpResponse(ctx, res);
+
+	}
+
+	public void pressInScene() {
+
+		List<DataCache> pressInTodayOnHistory = sceneBO.pressInScene(parmMap);
+		Map<String, Object> response = new HashMap<String, Object>();
+
+		// 显示返回
+		List<Map<String, String>> responseDatas = new ArrayList<Map<String, String>>();
+
+		for (DataCache dc : pressInTodayOnHistory) {
+			Map<String, String> rMap = new HashMap<String, String>();
+			rMap.put("key", dc.getKey());
+			rMap.put("field", dc.getField());
+			rMap.put("value", dc.getValue());
+			responseDatas.add(rMap);
+		}
+		response.put("mes", "success");
+		response.put("code", 0);
+		response.put("data", responseDatas);
+
+		FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, io.netty.handler.codec.http.HttpResponseStatus.OK,
+				Unpooled.wrappedBuffer(JSONObject.fromObject(response).toString().getBytes()));
+		ResponseGenerator.sendHttpResponse(ctx, res);
+
+	}
+
+	public void pressInLottery() {
+
+		List<DataCache> pressInTodayOnHistory = lotteryBO.pressInLottery(parmMap);
+		Map<String, Object> response = new HashMap<String, Object>();
+
+		// 显示返回
+		List<Map<String, String>> responseDatas = new ArrayList<Map<String, String>>();
+
+		for (DataCache dc : pressInTodayOnHistory) {
+			Map<String, String> rMap = new HashMap<String, String>();
+			rMap.put("key", dc.getKey());
+			rMap.put("field", dc.getField());
+			rMap.put("value", dc.getValue());
+			responseDatas.add(rMap);
+		}
+		response.put("mes", "success");
+		response.put("code", 0);
+		response.put("data", responseDatas);
+
+		FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, io.netty.handler.codec.http.HttpResponseStatus.OK,
+				Unpooled.wrappedBuffer(JSONObject.fromObject(response).toString().getBytes()));
+		ResponseGenerator.sendHttpResponse(ctx, res);
+
+	}
+
+	public void pressInFilm() {
+
+		List<DataCache> pressInTodayOnHistory = filmBO.pressInFilm(parmMap);
+		Map<String, Object> response = new HashMap<String, Object>();
+
+		// 显示返回
+		List<Map<String, String>> responseDatas = new ArrayList<Map<String, String>>();
+
+		for (DataCache dc : pressInTodayOnHistory) {
+			Map<String, String> rMap = new HashMap<String, String>();
+			rMap.put("key", dc.getKey());
+			rMap.put("field", dc.getField());
+			rMap.put("value", dc.getValue());
+			responseDatas.add(rMap);
+		}
+		response.put("mes", "success");
+		response.put("code", 0);
+		response.put("data", responseDatas);
+
+		FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, io.netty.handler.codec.http.HttpResponseStatus.OK,
+				Unpooled.wrappedBuffer(JSONObject.fromObject(response).toString().getBytes()));
+		ResponseGenerator.sendHttpResponse(ctx, res);
+
+	}
+
+	public void pressInPicture() {
+
+		List<DataCache> pressInTodayOnHistory = pictureBO.pressInPicture(parmMap);
 		Map<String, Object> response = new HashMap<String, Object>();
 
 		// 显示返回

@@ -78,6 +78,7 @@ public class FootBasketBOImpl implements FootBasketBO {
 					responseData.put("date", footBasket.getDate());
 					responseData.put("time", footBasket.getTime());
 					responseData.put("package_title", footBasket.getPackage_title());
+					responseData.put("unique_type", 0);
 
 					//
 					dc.setValue(JSONObject.toJSONString(responseData));

@@ -40,13 +40,16 @@ public class AidTypeBOImpl implements AidTypeBO {
 	public List<DataCache> pressInAidType(Map<String, String> parmMap) {
 
 		String channel_code = parmMap.get("channel_code");
+		//aid类型
 		List<DataType> dts = cardDataDao.pressInDataType(channel_code);
 
 		List<DataCache> list = new ArrayList<DataCache>();
 		StringBuffer sb = new StringBuffer();
 		sb.append(channel_code).append("-").append(PropertiesUtil.version).append("-").append("aidtype");
 
-		if (!dts.isEmpty()) {
+		//确定场景类型
+		List<DataType> scenedts = cardDataDao.pressInSceneType(channel_code);
+		if (!dts.isEmpty()||!scenedts.isEmpty()) {
 
 			for (DataType dt : dts) {
 				DataCache dc = new DataCache();
@@ -56,6 +59,17 @@ public class AidTypeBOImpl implements AidTypeBO {
 				dc.setField(dt.getTree_id());
 				//
 				dc.setValue(dt.getData_type());
+				list.add(dc);
+			}
+			
+			for (DataType sdt : scenedts) {
+				DataCache dc = new DataCache();
+				//
+				String saveKey = sb.toString();
+				dc.setKey(saveKey);
+				dc.setField(sdt.getTree_id());
+				//
+				dc.setValue("66");
 				list.add(dc);
 			}
 

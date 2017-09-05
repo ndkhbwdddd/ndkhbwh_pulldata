@@ -58,7 +58,6 @@ public class CompleteBOImpl implements CompleteBO {
 		}
 
 		JSONArray fromObject = JSONArray.fromObject(reslist);
-		System.out.println(fromObject);
 		String cacheKey = channel_code + "-" + version + "-complete";
 		dataCacheDAO.insertRecommendSubscribeList(cacheKey, fromObject.toString());
 		redisDAO.removeRedisByCacheKey(cacheKey);

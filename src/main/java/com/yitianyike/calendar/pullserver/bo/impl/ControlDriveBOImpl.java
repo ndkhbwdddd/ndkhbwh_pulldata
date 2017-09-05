@@ -43,19 +43,26 @@ public class ControlDriveBOImpl implements ControlDriveBO {
 		List<ControlDrive> controlDriveList = cardDataDao.pressInControlDrive();
 		List<DataCache> list = new ArrayList<DataCache>();
 		ChanneRelevance channeRelevance = cardDataDao.getDataType("限行", channel_code);
-		
-		//聚合map
-		Map<String,ControlDrive>  aggregationMap = new HashMap<String, ControlDrive>();
+		List<ControlDrive> citys = cardDataDao.pressInControlDriveCity();
+		List<Map<String, Object>> citysList = new ArrayList<Map<String, Object>>();
+		for (ControlDrive controlDrive : citys) {
+			Map<String, Object> cityMap = new HashMap<String, Object>();
+			cityMap.put("city_name", controlDrive.getCityname());
+			cityMap.put("city_id", controlDrive.getControl_drive_id());
+			citysList.add(cityMap);
+		}
+
+		// 聚合map
+		Map<String, ControlDrive> aggregationMap = new HashMap<String, ControlDrive>();
 		for (ControlDrive controlDrive : controlDriveList) {
-			StringBuffer sb =new StringBuffer();
+			StringBuffer sb = new StringBuffer();
 			sb.append(controlDrive.getDate()).append("-").append(controlDrive.getCityname());
 			aggregationMap.put(sb.toString(), controlDrive);
 		}
-		
-		
-		if(channeRelevance!=null){
+
+		if (channeRelevance != null) {
 			for (ControlDrive controlDrive : controlDriveList) {
-				
+
 				StringBuffer sb = new StringBuffer();
 				sb.append(channel_code).append("-").append(PropertiesUtil.version).append("-")
 						.append(controlDrive.getControl_drive_id());
@@ -72,23 +79,25 @@ public class ControlDriveBOImpl implements ControlDriveBO {
 				String cityname = controlDrive.getCityname();
 				responseData.put("cityname", cityname);
 				responseData.put("skip_url", controlDrive.getSkip_url());
-				
-				Map<String, Object>	todayData = new HashMap<String, Object>();
+
+				Map<String, Object> todayData = new HashMap<String, Object>();
 				String date = controlDrive.getDate();
 				responseData.put("data_type", channeRelevance.getData_type());
+				responseData.put("citys", citysList);
+
 				todayData.put("date", date);
 				todayData.put("week", controlDrive.getWeek());
 				todayData.put("xxweihao", controlDrive.getXxweihao());
-				
-				
+				todayData.put("unique_type", 0);
+
 				twoDate.add(todayData);
-				//tomorrow
+				// tomorrow
 				String decreaseDate = DateUtil.getDecreaseDate(date);
-				StringBuffer sbkey =new StringBuffer();
+				StringBuffer sbkey = new StringBuffer();
 				sbkey.append(decreaseDate).append("-").append(cityname);
 				ControlDrive tomorrowControlDrive = aggregationMap.get(sbkey.toString());
-				if(tomorrowControlDrive!=null){
-					Map<String, Object>	tomorrowData = new HashMap<String, Object>();
+				if (tomorrowControlDrive != null) {
+					Map<String, Object> tomorrowData = new HashMap<String, Object>();
 					tomorrowData.put("date", tomorrowControlDrive.getDate());
 					tomorrowData.put("week", tomorrowControlDrive.getWeek());
 					tomorrowData.put("xxweihao", tomorrowControlDrive.getXxweihao());
@@ -103,7 +112,7 @@ public class ControlDriveBOImpl implements ControlDriveBO {
 			redisDAO.updateRedis(list);
 		}
 		// 按别名取数据
-		
+
 		return list;
 	}
 

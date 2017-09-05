@@ -269,4 +269,15 @@ public class RedisDAOImpl implements RedisDAO {
 
 	}
 
+	@Override
+	public void deleteRedis(String saveKey) {
+		for (int i = 0; i < PropertiesUtil.redisCount - 1; i++) {
+			setRedisTemplate("redisTemplate" + i);
+			RedisTemplate<String, Object> redisTemplate = get();
+			removeRedisByCacheKey(saveKey, redisTemplate);
+			clearRedisTemplate();
+		}
+
+	}
+
 }

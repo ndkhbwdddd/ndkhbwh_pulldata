@@ -32,4 +32,6 @@ public interface RedisDAO {
 	void updateSubscribedList(String cacheKey, List<Bcolumn> subscribedList);
 	
 	void updateRedisNOFiled(List<DataCache> list);
+
+	void deleteRedis(String saveKey);
 }
