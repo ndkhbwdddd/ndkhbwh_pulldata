@@ -16,6 +16,7 @@ import com.yitianyike.calendar.pullserver.bo.DataCacheBO;
 import com.yitianyike.calendar.pullserver.bo.FestivalZipBO;
 import com.yitianyike.calendar.pullserver.bo.FilmBO;
 import com.yitianyike.calendar.pullserver.bo.FootBasketBO;
+import com.yitianyike.calendar.pullserver.bo.LogBO;
 import com.yitianyike.calendar.pullserver.bo.LotteryBO;
 import com.yitianyike.calendar.pullserver.bo.NewsBO;
 import com.yitianyike.calendar.pullserver.bo.PictureBO;
@@ -35,6 +36,7 @@ import com.yitianyike.calendar.pullserver.dao.DataCacheDAO;
 import com.yitianyike.calendar.pullserver.dao.PackageDAO;
 import com.yitianyike.calendar.pullserver.dao.RedisDAO;
 import com.yitianyike.calendar.pullserver.dao.VideoDAO;
+import com.yitianyike.calendar.pullserver.task.CardFlushTask;
 
 public class DataAccessFactory {
 
@@ -86,6 +88,8 @@ public class DataAccessFactory {
 		dataHolder.put("lotteryBO", (LotteryBO) mysqlCmsCtxXml.getBean("lotteryBO"));
 		dataHolder.put("filmBO", (FilmBO) mysqlCmsCtxXml.getBean("filmBO"));
 		dataHolder.put("pictureBO", (PictureBO) mysqlCmsCtxXml.getBean("pictureBO"));
+		dataHolder.put("task", (CardFlushTask) mysqlCmsCtxXml.getBean("task"));
+		dataHolder.put("logBO", (LogBO) mysqlCmsCtxXml.getBean("logBO"));
 		log.info("init Data Access Objects[Mysql User] over.");
 	}
 

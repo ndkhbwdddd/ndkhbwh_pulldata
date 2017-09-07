@@ -16,36 +16,33 @@ import com.yitianyike.calendar.pullserver.bo.CompleteBO;
 import com.yitianyike.calendar.pullserver.service.DataAccessFactory;
 
 public class CompleteHandler {
-	private CompleteBO completeBO = (CompleteBO) DataAccessFactory.dataHolder()
-			.get("completeBO");
+	private CompleteBO completeBO = (CompleteBO) DataAccessFactory.dataHolder().get("completeBO");
 
 	private Map<String, String> parmMap;
 	private ChannelHandlerContext ctx;
 	private String content;
 
-	public CompleteHandler(ChannelHandlerContext ctx, Map<String, String> map,
-			String content) {
+	public CompleteHandler(ChannelHandlerContext ctx, Map<String, String> map, String content) {
 		this.parmMap = map;
 		this.ctx = ctx;
 		this.content = content;
 	}
 
 	void process() {
-		List<Map<String, Object>> complete = completeBO.getComplete(
-				parmMap.get("channel_code"));
+		List<Map<String, Object>> complete = completeBO.getComplete(parmMap.get("channel_code"));
 		Map<String, Object> response = new HashMap<String, Object>();
 		if (!complete.isEmpty()) {
 			response.put("mes", "success");
 			response.put("code", 1);
+			response.put("data", complete);
 		} else {
-			response.put("mes", "error");
+			response.put("mes", "no data");
 			response.put("code", 0);
+			response.put("data", complete);
 		}
 
-		FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1,
-				io.netty.handler.codec.http.HttpResponseStatus.OK,
-				Unpooled.wrappedBuffer(JSONObject.fromObject(response)
-						.toString().getBytes()));
+		FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, io.netty.handler.codec.http.HttpResponseStatus.OK,
+				Unpooled.wrappedBuffer(JSONObject.fromObject(response).toString().getBytes()));
 		ResponseGenerator.sendHttpResponse(ctx, res);
 
 	}

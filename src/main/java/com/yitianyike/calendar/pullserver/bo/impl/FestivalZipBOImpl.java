@@ -109,7 +109,6 @@ public class FestivalZipBOImpl implements FestivalZipBO {
 			ZipCompressing.zip(zipfilePath, new File(filePath));
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("压缩出现问题");
 			return null;
 		}
 		return QiNiuUploadUtils.upZip(zipfilePath);

@@ -10,17 +10,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONArray;
+import com.yitianyike.calendar.pullserver.bo.DataCacheBO;
 import com.yitianyike.calendar.pullserver.bo.RecommendSubscribeListBO;
 import com.yitianyike.calendar.pullserver.dao.PackageDAO;
 import com.yitianyike.calendar.pullserver.model.responsedata.BRecommend;
 import com.yitianyike.calendar.pullserver.model.responsedata.Bcolumn;
+import com.yitianyike.calendar.pullserver.service.DataAccessFactory;
 import com.yitianyike.calendar.pullserver.util.MapUtil;
+import com.yitianyike.calendar.pullserver.util.PropertiesUtil;
 
 @Component("recommendSubscribeListBO")
 public class RecommendSubscribeListBOImpl implements RecommendSubscribeListBO {
 	@Autowired
 	private PackageDAO packageDAO;
-
+	@Autowired
+	private DataCacheBO dataCacheBO;// = (DataCacheBO) DataAccessFactory.dataHolder().get("dataCacheBO");
 	@Override
 	public String organizeRecommendSubscribeList(Map<String, String> paramMap) {
 
@@ -72,15 +76,12 @@ public class RecommendSubscribeListBOImpl implements RecommendSubscribeListBO {
 					}
 					// 广告
 				} else {
-					List<BRecommend> itemUnderTopicIsBannerBRecommends = packageDAO
-							.getItemUnderTopicIsBanner(itemBRecommend.getSource_id());
 					List<Bcolumn> itemUnderTopicIsPackageBRecommends = packageDAO
 							.getItemUnderTopicIsPackage(itemBRecommend.getStyle_id());
-					if (!itemUnderTopicIsBannerBRecommends.isEmpty() && !itemUnderTopicIsPackageBRecommends.isEmpty()) {
+					if (!itemUnderTopicIsPackageBRecommends.isEmpty()) {
 						Bcolumn bcolumn = itemUnderTopicIsPackageBRecommends.get(0);
-						BRecommend bRecommendBanner = itemUnderTopicIsBannerBRecommends.get(0);
 						itemBRecommendMap.put("skip_action", 1);
-						itemBRecommendMap.put("skip_url", bRecommendBanner.getSkip_url());
+						itemBRecommendMap.put("skip_url", bcolumn.getSkip_url());
 						itemBRecommendMap.put("package_name", bcolumn.getName());
 						itemBRecommendMap.put("icon_url", bcolumn.getIcon());
 						itemBRecommendMap.put("pid", 0);
@@ -119,10 +120,18 @@ public class RecommendSubscribeListBOImpl implements RecommendSubscribeListBO {
 		for (Map<String, Object> map : keySet) {
 			resposeList.add(map);
 		}
-		//String jsonString = JSONArray.toJSONString(resposeList);
-		//System.out.println(jsonString);
+		// String jsonString = JSONArray.toJSONString(resposeList);
+		// System.out.println(jsonString);
 
-		return JSONArray.toJSONString(resposeList);
+		
+		String recommendSubscribeListJson = JSONArray.toJSONString(resposeList);
+		
+		StringBuilder deleteSbParam = new StringBuilder();
+		deleteSbParam.append(paramMap.get("channel_code")).append("-").append(PropertiesUtil.version)
+				.append("-recommend");
+		dataCacheBO.insertRecommendSubscribeList(deleteSbParam.toString(), recommendSubscribeListJson);
+		
+		return recommendSubscribeListJson;
 		// } else {
 		// List<Map<String, Object>> recommendSubscribeList = new
 		// ArrayList<Map<String, Object>>();

@@ -35,12 +35,10 @@ public class DataCacheHandler {
 			.get("subscribedListBO");
 	private RecommendSubscribeListBO recommendSubscribeListBO = (RecommendSubscribeListBO) DataAccessFactory
 			.dataHolder().get("recommendSubscribeListBO");
-	
-	private TabsListBO tabsListBO = (TabsListBO) DataAccessFactory
-			.dataHolder().get("tabsListBO");
-	
-	
-	private DataCacheBO dataCacheBO = (DataCacheBO) DataAccessFactory.dataHolder().get("dataCacheBO");
+
+	private TabsListBO tabsListBO = (TabsListBO) DataAccessFactory.dataHolder().get("tabsListBO");
+
+	//
 	private SportCardDataBO sportCardDataBO = (SportCardDataBO) DataAccessFactory.dataHolder().get("sportCardDataBO");
 
 	private Map<String, String> parmMap;
@@ -55,101 +53,46 @@ public class DataCacheHandler {
 
 	public void organizeSubscribedList() {
 		logger.info(EnumConstants.COLOR_RED + "subscribedList handler content : " + content + EnumConstants.COLOR_NONE);
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String reString = "";
 		try {
 			parmMap.put("version", PropertiesUtil.version);
 			List<Bcolumn> subscribedList = subscribedListBO.subscribedList(parmMap);
 
-			StringBuilder deleteSbParam = new StringBuilder();
-			deleteSbParam.append(parmMap.get("channel_code")).append("-").append(parmMap.get("version"))
-					.append("-subscribed");
-			dataCacheBO.insertSubscribedList(deleteSbParam.toString(), subscribedList);
-			resultMap.put("code", 1);
-			resultMap.put("msg", "success");
+			for (Bcolumn bcolumn : subscribedList) {
+				reString += bcolumn.getSave_value() + ",";
+			}
+			if (reString.length() > 0) {
+				String substring = reString.substring(0, reString.length() - 1);
+				reString = "[" + substring + "]";
+			}
 		} catch (Exception e) {
-			System.out.println(e);
-			resultMap.put("code", 0);
-			resultMap.put("msg", "error");
 		}
 
 		FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, io.netty.handler.codec.http.HttpResponseStatus.OK,
-				Unpooled.wrappedBuffer(JSONObject.fromObject(resultMap).toString().getBytes()));
+				Unpooled.wrappedBuffer(reString.getBytes()));
 		ResponseGenerator.sendHttpResponse(ctx, res);
 
 	}
 
 	public void organizeRecommendSubscribeList() {
 		logger.info(EnumConstants.COLOR_RED + "register handler content : " + content + EnumConstants.COLOR_NONE);
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String recommendSubscribeListJson = "";
 		try {
-			String recommendSubscribeListJson = recommendSubscribeListBO.organizeRecommendSubscribeList(parmMap);
-			StringBuilder deleteSbParam = new StringBuilder();
-			deleteSbParam.append(parmMap.get("channel_code")).append("-").append(PropertiesUtil.version)
-					.append("-recommend");
-			dataCacheBO.insertRecommendSubscribeList(deleteSbParam.toString(), recommendSubscribeListJson);
-			resultMap.put("code", 1);
-			resultMap.put("msg", "success");
+			recommendSubscribeListJson = recommendSubscribeListBO.organizeRecommendSubscribeList(parmMap);
+			
 		} catch (Exception e) {
-			resultMap.put("code", 0);
-			resultMap.put("msg", "error");
 		}
 
 		FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, io.netty.handler.codec.http.HttpResponseStatus.OK,
-				Unpooled.wrappedBuffer(JSONObject.fromObject(resultMap).toString().getBytes()));
+				Unpooled.wrappedBuffer(recommendSubscribeListJson.getBytes()));
 		ResponseGenerator.sendHttpResponse(ctx, res);
 
 	}
 
-	public void flushSportCardData() {
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		try {
-			List<Map<String, Object>> organizeCardData = sportCardDataBO.organizeCardData(parmMap);
-			parmMap.put("version", PropertiesUtil.version);
-			dataCacheBO.insertCardList(organizeCardData, parmMap);
-			resultMap.put("code", 1);
-			resultMap.put("msg", "success");
-		} catch (Exception e) {
-			resultMap.put("code", 0);
-			resultMap.put("msg", "error");
-		}
-		FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, io.netty.handler.codec.http.HttpResponseStatus.OK,
-				Unpooled.wrappedBuffer(JSONObject.fromObject(resultMap).toString().getBytes()));
-		ResponseGenerator.sendHttpResponse(ctx, res);
-
-	}
-
-	public void organizeTabsList() {
-		logger.info(EnumConstants.COLOR_RED + "tabs handler content : " + content + EnumConstants.COLOR_NONE);
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		try {
-			parmMap.put("version", PropertiesUtil.version);
-			 String tabs = tabsListBO.tabsList(parmMap);
-
-			StringBuilder deleteSbParam = new StringBuilder();
-			deleteSbParam.append(parmMap.get("channel_code")).append("-").append(parmMap.get("version"))
-					.append("-tabs");
-			dataCacheBO.insertTabsList(deleteSbParam.toString(), tabs);
-			resultMap.put("code", 1);
-			resultMap.put("msg", "success");
-		} catch (Exception e) {
-			System.out.println(e);
-			resultMap.put("code", 0);
-			resultMap.put("msg", "error");
-		}
-
-		FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, io.netty.handler.codec.http.HttpResponseStatus.OK,
-				Unpooled.wrappedBuffer(JSONObject.fromObject(resultMap).toString().getBytes()));
-		ResponseGenerator.sendHttpResponse(ctx, res);
-
-	}
-
-//	public void flushLowerPageList() {
+//	public void flushSportCardData() {
 //		Map<String, Object> resultMap = new HashMap<String, Object>();
 //		try {
 //			List<Map<String, Object>> organizeCardData = sportCardDataBO.organizeCardData(parmMap);
-//			
-//			
-//			
 //			parmMap.put("version", PropertiesUtil.version);
 //			dataCacheBO.insertCardList(organizeCardData, parmMap);
 //			resultMap.put("code", 1);
@@ -161,6 +104,45 @@ public class DataCacheHandler {
 //		FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, io.netty.handler.codec.http.HttpResponseStatus.OK,
 //				Unpooled.wrappedBuffer(JSONObject.fromObject(resultMap).toString().getBytes()));
 //		ResponseGenerator.sendHttpResponse(ctx, res);
+//
 //	}
+
+	public void organizeTabsList() {
+		logger.info(EnumConstants.COLOR_RED + "tabs handler content : " + content + EnumConstants.COLOR_NONE);
+		String tabs = "";
+		try {
+			parmMap.put("version", PropertiesUtil.version);
+			tabs = tabsListBO.tabsList(parmMap);
+
+		} catch (Exception e) {
+		}
+
+		FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, io.netty.handler.codec.http.HttpResponseStatus.OK,
+				Unpooled.wrappedBuffer(tabs.getBytes()));
+		ResponseGenerator.sendHttpResponse(ctx, res);
+
+	}
+
+	// public void flushLowerPageList() {
+	// Map<String, Object> resultMap = new HashMap<String, Object>();
+	// try {
+	// List<Map<String, Object>> organizeCardData =
+	// sportCardDataBO.organizeCardData(parmMap);
+	//
+	//
+	//
+	// parmMap.put("version", PropertiesUtil.version);
+	// dataCacheBO.insertCardList(organizeCardData, parmMap);
+	// resultMap.put("code", 1);
+	// resultMap.put("msg", "success");
+	// } catch (Exception e) {
+	// resultMap.put("code", 0);
+	// resultMap.put("msg", "error");
+	// }
+	// FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1,
+	// io.netty.handler.codec.http.HttpResponseStatus.OK,
+	// Unpooled.wrappedBuffer(JSONObject.fromObject(resultMap).toString().getBytes()));
+	// ResponseGenerator.sendHttpResponse(ctx, res);
+	// }
 
 }

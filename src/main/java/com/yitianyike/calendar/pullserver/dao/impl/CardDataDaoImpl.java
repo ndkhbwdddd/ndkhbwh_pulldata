@@ -36,7 +36,7 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 		StringBuilder sql = new StringBuilder();
 		String cids = paramMap.get("cids").toString();
 		sql.append(
-				"SELECT co.column_id,an.season,an.anchor_id,an.card_style,co.column_name,an.quote_name,la.little_type,la.type,an.frequence,an.exp_date_time,	co.skip_action as skip_action FROM cms_channel ch,cms_package pa,cms_column co,cms_anchor an ,cms_layout la WHERE ch.channel_code=pa.channel_code AND pa.package_id=co.package_id AND co.anchor_id=an.anchor_id AND ch.channel_code=:channel_code  AND co.column_id in( "
+				"SELECT co.column_id,an.season,an.anchor_id,an.card_style,co.column_name,an.quote_name,la.little_type,la.type,an.frequence,an.exp_date_time,	co.skip_action as skip_action FROM cms_channel ch,cps_package pa,cms_column co,cms_anchor an ,cms_layout la WHERE ch.channel_code=pa.channel_code AND pa.package_id=co.package_id AND co.anchor_id=an.anchor_id AND ch.channel_code=:channel_code  AND co.column_id in( "
 						+ cids
 						+ " ) AND pa.`status`=1 AND co.`status`=1 AND an.`status`=1 AND la.l_id=an.layout_id    AND pa.use_range=1");
 
@@ -158,7 +158,7 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT ch.channel_code,co.column_id as id,an.frequence,an.season FROM cms_channel ch,cms_package pa,cms_column co,cms_anchor an  WHERE ch.channel_code=pa.channel_code AND pa.package_id=co.package_id AND co.anchor_id=an.anchor_id  AND pa.`status`=1 AND co.`status`=1 AND an.`status`=1  AND an.season!='no_season' AND ch.channel_code=:channel_code   AND pa.use_range=1");
+				"SELECT ch.channel_code,co.column_id as id,an.frequence,an.season FROM cms_channel ch,cps_package pa,cms_column co,cms_anchor an  WHERE ch.channel_code=pa.channel_code AND pa.package_id=co.package_id AND co.anchor_id=an.anchor_id  AND pa.`status`=1 AND co.`status`=1 AND an.`status`=1  AND an.season!='no_season' AND ch.channel_code=:channel_code   AND pa.use_range=1");
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("channel_code", channel_code);
 		List<Map<String, Object>> resultList = this.getNamedParameterJdbcTemplate().query(sql.toString(), paramMap,
@@ -288,7 +288,7 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT  cp.tree_id,ca.data_style as data_type  ,ca.alias FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cms_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND cp.channel_code=:channel_code AND ca.alias=:alias LIMIT 1");
+				"SELECT  cp.tree_id,ca.data_style as data_type  ,ca.alias FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cps_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND cp.channel_code=:channel_code AND ca.alias=:alias LIMIT 1");
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		hashMap.put("channel_code", channel_code);
 		hashMap.put("alias", xz_name);
@@ -446,7 +446,7 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 		StringBuilder sql = new StringBuilder();
 
 		sql.append(
-				"SELECT  cp.tree_id,ca.data_style as data_type  FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cms_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND  cp.channel_code=:channel_code AND ca.alias  in (");
+				"SELECT  cp.tree_id,ca.data_style as data_type  FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cps_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND  cp.channel_code=:channel_code AND ca.alias  in (");
 
 		sql.append("'").append(hostname).append("'").append(",").append("'").append(guestname).append("'").append(" )");
 
@@ -473,7 +473,7 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 		StringBuilder sql = new StringBuilder();
 
 		sql.append(
-				"SELECT cp.tree_id,ca.data_type  FROM cms_package  cp  INNER JOIN  cps_scene_anchor  csa ON cp.source_id=csa.scene_id  INNER JOIN cps_anchor ca ON ca.anchor_id=csa.anchor_id  WHERE csa.history_id=0 AND cp.history_id=0  AND ca.history_id=0  AND ca.`status`=1 AND csa.`status`=1 AND cp.`status`=1  AND cp.data_type=1 AND cp.tab_id=1  AND csa.column_type=0  AND cp.channel_code=:channel_code");
+				"SELECT cp.tree_id,ca.data_type  FROM cps_package  cp  INNER JOIN  cps_scene_anchor  csa ON cp.source_id=csa.scene_id  INNER JOIN cps_anchor ca ON ca.anchor_id=csa.anchor_id  WHERE csa.history_id=0 AND cp.history_id=0  AND ca.history_id=0  AND ca.`status`=1 AND csa.`status`=1 AND cp.`status`=1  AND cp.data_type=1 AND cp.tab_id=1  AND csa.column_type=0  AND cp.channel_code=:channel_code");
 
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		hashMap.put("channel_code", channel_code);
@@ -573,7 +573,7 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 		StringBuilder sql = new StringBuilder();
 
 		sql.append(
-				"SELECT  cp.tree_name,cp.tree_id,ca.data_style as data_type ,ca.alias,ca.show_number   FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cms_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND  cp.channel_code=:channel_code AND ca.data_type=5");
+				"SELECT  cp.tree_name,cp.tree_id,ca.data_style as data_type ,ca.alias,ca.show_number   FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cps_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND  cp.channel_code=:channel_code AND ca.data_type=5");
 
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		hashMap.put("channel_code", channel_code);
@@ -628,7 +628,7 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 	public List<DataType> pressInSceneType(String channel_code) {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT cp.tree_id,cp.tree_name  FROM cms_package  cp  INNER JOIN  cps_scene_anchor  csa ON cp.source_id=csa.scene_id   WHERE csa.history_id=0 AND cp.history_id=0   AND csa.`status`=1 AND cp.`status`=1  AND cp.data_type=1 AND cp.tab_id=1  AND csa.column_type=1  AND cp.channel_code=:channel_code GROUP BY cp.tree_id");
+				"SELECT cp.tree_id,cp.tree_name  FROM cps_package  cp  INNER JOIN  cps_scene_anchor  csa ON cp.source_id=csa.scene_id   WHERE csa.history_id=0 AND cp.history_id=0   AND csa.`status`=1 AND cp.`status`=1  AND cp.data_type=1 AND cp.tab_id=1  AND csa.column_type=1  AND cp.channel_code=:channel_code GROUP BY cp.tree_id");
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		hashMap.put("channel_code", channel_code);
 		List<DataType> resultList = this.getNamedParameterJdbcTemplate().query(sql.toString(), hashMap,
@@ -818,7 +818,7 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 		StringBuilder sql = new StringBuilder();
 
 		sql.append(
-				"SELECT  cp.tree_name,cp.tree_id,ca.data_style as data_type ,ca.alias,ca.show_number   FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cms_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND  cp.channel_code=:channel_code AND ca.data_type="
+				"SELECT  cp.tree_name,cp.tree_id,ca.data_style as data_type ,ca.alias,ca.show_number   FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cps_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND  cp.channel_code=:channel_code AND ca.data_type="
 						+ EnumConstants.FESTIVAL);
 
 		HashMap<String, String> hashMap = new HashMap<String, String>();
@@ -876,7 +876,7 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 		StringBuilder sql = new StringBuilder();
 
 		sql.append(
-				"SELECT  cp.tree_name,cp.tree_id,ca.data_style as data_type ,ca.alias,ca.show_number   FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cms_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND  cp.channel_code=:channel_code AND ca.data_type="
+				"SELECT  cp.tree_name,cp.tree_id,ca.data_style as data_type ,ca.alias,ca.show_number   FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cps_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND  cp.channel_code=:channel_code AND ca.data_type="
 						+ EnumConstants.LOTTERY);
 
 		HashMap<String, String> hashMap = new HashMap<String, String>();
@@ -962,7 +962,7 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 		StringBuilder sql = new StringBuilder();
 
 		sql.append(
-				"SELECT  cp.tree_name,cp.tree_id,ca.data_style as data_type ,ca.alias,ca.show_number   FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cms_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND  cp.channel_code=:channel_code AND ca.data_type="
+				"SELECT  cp.tree_name,cp.tree_id,ca.data_style as data_type ,ca.alias,ca.show_number   FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cps_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND  cp.channel_code=:channel_code AND ca.data_type="
 						+ EnumConstants.FILM);
 
 		HashMap<String, String> hashMap = new HashMap<String, String>();
@@ -1056,7 +1056,7 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 		StringBuilder sql = new StringBuilder();
 
 		sql.append(
-				"SELECT  cp.tree_name,cp.tree_id,ca.data_style  ,ca.alias,ca.show_number   FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cms_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND  cp.channel_code=:channel_code AND ca.data_type="
+				"SELECT  cp.tree_name,cp.tree_id,ca.data_style  ,ca.alias,ca.show_number   FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cps_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND  cp.channel_code=:channel_code AND ca.data_type="
 						+ EnumConstants.PICTURE);
 
 		HashMap<String, String> hashMap = new HashMap<String, String>();
@@ -1152,6 +1152,30 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 				});
 
 		return resultList;
+	}
+
+	@Override
+	public List<String> getChannels() {
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT channel_code FROM `cps_channel`");
+		List<String> resultList = this.getNamedParameterJdbcTemplate().query(sql.toString(),
+				new HashMap<String, String>(), new RowMapper<String>() {
+					@Override
+					public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+						return rs.getString("channel_code");
+					}
+				});
+
+		return resultList;
+	}
+
+	@Override
+	public void writLogs(String channel, String key, String value) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("insert into cps_logs_flush (channel_code, cache_key, cache_value,create_date) values(?, ?, ?, ?)");
+		Object[] objs = new Object[] { channel, key, value, new Date() };
+		this.getJdbcTemplate().update(sb.toString(), objs);
 	}
 
 }

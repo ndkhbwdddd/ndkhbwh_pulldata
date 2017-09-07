@@ -129,4 +129,10 @@ public interface CardDataDao {
 	// 查询所有限行城市
 	List<ControlDrive> pressInControlDriveCity();
 
+	// 获取所有渠道
+	List<String> getChannels();
+
+	// 写入刷新日志
+	void writLogs(String channel, String key, String value);
+
 }

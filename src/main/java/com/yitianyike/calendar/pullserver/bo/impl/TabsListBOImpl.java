@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONArray;
+import com.yitianyike.calendar.pullserver.bo.DataCacheBO;
 import com.yitianyike.calendar.pullserver.bo.SubscribedListBO;
 import com.yitianyike.calendar.pullserver.bo.TabsListBO;
 import com.yitianyike.calendar.pullserver.dao.ColumnDAO;
 import com.yitianyike.calendar.pullserver.model.responsedata.Tabs;
+import com.yitianyike.calendar.pullserver.service.DataAccessFactory;
 
 import net.sf.json.JSONObject;
 
@@ -21,6 +23,9 @@ import net.sf.json.JSONObject;
 public class TabsListBOImpl implements TabsListBO {
 	@Autowired
 	private ColumnDAO columnDAO;
+	@Autowired
+	private DataCacheBO dataCacheBO;// = (DataCacheBO)
+									// DataAccessFactory.dataHolder().get("dataCacheBO");
 
 	@Override
 	public String tabsList(Map<String, String> parmMap) {
@@ -33,7 +38,12 @@ public class TabsListBOImpl implements TabsListBO {
 			responseTab.put("skip_url", StringUtils.isBlank(tab.getH5_url()) ? "" : tab.getH5_url());
 			responseTabsList.add(responseTab);
 		}
-		return JSONArray.toJSONString(responseTabsList);
+
+		String tabs = JSONArray.toJSONString(responseTabsList);
+		StringBuilder deleteSbParam = new StringBuilder();
+		deleteSbParam.append(parmMap.get("channel_code")).append("-").append(parmMap.get("version")).append("-tabs");
+		dataCacheBO.insertTabsList(deleteSbParam.toString(), tabs);
+		return tabs;
 	}
 
 }

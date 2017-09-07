@@ -25,7 +25,7 @@ public class ColumnDAOImpl extends BaseDAO implements ColumnDAO {
 
 		StringBuffer sb = new StringBuffer();
 		sb.append(
-				"SELECT cp.tree_id ,csv.style_value,cc.h5_url,cc.skip_action  FROM cms_package cp LEFT JOIN cms_column cc ON cp.source_id=cc.column_id LEFT JOIN    cms_style_value csv ON cp.style_id=csv.key_id  WHERE cp.history_id=0  AND csv.history_id=0 AND cc.history_id=0  AND cp.channel_code=:channel_code AND cp.status=1 AND csv.status=1 AND cc.status=1  AND cp.tab_id=1 AND cp.data_type=1  ORDER BY cp.tree_order");
+				"SELECT  cps_package.tree_id,cps_package.data_type,cps_package.skip_action,cps_package.skip_url as h5_url,cps_package.tree_name,cps_source.img_url FROM cps_package  INNER JOIN cps_source   ON cps_package.resource_id=cps_source.resource_id  WHERE cps_package.history_id=0 AND cps_source.history_id=0 AND cps_package.`status`=1   AND data_type=1 AND tab_id=1   AND cps_package.channel_code=:channel_code  ORDER BY tree_order");
 		List<Bcolumn> list = new ArrayList<Bcolumn>();
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -37,7 +37,8 @@ public class ColumnDAOImpl extends BaseDAO implements ColumnDAO {
 					Bcolumn bcolumn = new Bcolumn();
 					bcolumn.setSkip_action(rs.getInt("skip_action"));
 					bcolumn.setSkip_url(rs.getString("h5_url"));
-					bcolumn.setValues(rs.getString("style_value"));
+					bcolumn.setIcon(rs.getString("img_url"));
+					bcolumn.setName(rs.getString("tree_name"));
 					bcolumn.setTree_id(rs.getInt("tree_id"));
 					bcolumn.setSaveValue();
 					return bcolumn;
@@ -341,15 +342,15 @@ public class ColumnDAOImpl extends BaseDAO implements ColumnDAO {
 	public List<Tabs> getTabsList(Map<String, String> parmMap) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(
-				"SELECT tab_name,h5_url,tab_type FROM cms_center_tablist  WHERE channel_code=:channel_code AND flag=1   AND  status=1 ORDER BY order_num");
+				"SELECT tab_name,h5_url,tab_type FROM cps_center_tablist  WHERE channel_code=:channel_code   AND  history_id=0 AND  status=1 ORDER BY order_num");
 		List<Tabs> resultList = new ArrayList<Tabs>();
 		try {
 			resultList = this.getNamedParameterJdbcTemplate().query(sb.toString(), parmMap, new RowMapper<Tabs>() {
 				@Override
 				public Tabs mapRow(ResultSet rs, int rowNum) throws SQLException {
 					Tabs tabs = new Tabs();
-					tabs.setH5_url(rs.getString("tab_name"));
-					tabs.setTab_name(rs.getString("h5_url"));
+					tabs.setH5_url(rs.getString("h5_url"));
+					tabs.setTab_name(rs.getString("tab_name"));
 					tabs.setTab_type(rs.getInt("tab_type"));
 					return tabs;
 				}

@@ -17,13 +17,11 @@ public class ZipCompressing {
 	private static int k = 1; // 定义递归次数变量
 
 	public static void zip(String zipFileName, File inputFile) throws Exception {
-		System.out.println("压缩中...");
 		ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipFileName));
 		BufferedOutputStream bo = new BufferedOutputStream(out);
 		zip(out, inputFile, inputFile.getName(), bo);
 		bo.close();
 		out.close(); // 输出流关闭
-		System.out.println("压缩完成");
 	}
 
 	private static void zip(ZipOutputStream out, File f, String base, BufferedOutputStream bo) throws Exception { // 方法重载
@@ -31,16 +29,13 @@ public class ZipCompressing {
 			File[] fl = f.listFiles();
 			if (fl.length == 0) {
 				out.putNextEntry(new ZipEntry(base + "/")); // 创建zip压缩进入点base
-				System.out.println(base + "/");
 			}
 			for (int i = 0; i < fl.length; i++) {
 				zip(out, fl[i], base + "/" + fl[i].getName(), bo); // 递归遍历子文件夹
 			}
-			System.out.println("第" + k + "次递归");
 			k++;
 		} else {
 			out.putNextEntry(new ZipEntry(base)); // 创建zip压缩进入点base
-			System.out.println(base);
 			FileInputStream in = new FileInputStream(f);
 			BufferedInputStream bi = new BufferedInputStream(in);
 			int b;
