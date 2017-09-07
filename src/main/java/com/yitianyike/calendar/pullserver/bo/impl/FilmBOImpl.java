@@ -125,6 +125,8 @@ public class FilmBOImpl implements FilmBO {
 				savaJsonMap.put("unique_type", 1);
 				savaJsonMap.put("title", tree_name);
 				savaJsonMap.put("datas", saveList);
+				savaJsonMap.put("more", 1);
+				savaJsonMap.put("sub_aid", channeRelevance.getTree_id());
 				String jsonString = JSONObject.toJSONString(savaJsonMap);
 				List<String> dates = DateUtil.findStringDates();
 				for (String date : dates) {

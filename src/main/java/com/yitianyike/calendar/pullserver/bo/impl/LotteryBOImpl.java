@@ -69,6 +69,10 @@ public class LotteryBOImpl implements LotteryBO {
 					responseData.put("detail", lottery.getDetail());
 					responseData.put("phase", lottery.getPhase());
 					responseData.put("unique_type", 0);
+					responseData.put("more", 1);
+					responseData.put("sub_aid", channeRelevance.getTree_id());
+					
+					
 					dc.setField(open.replace("-", ""));
 					//
 					dc.setValue(JSONObject.toJSONString(responseData));

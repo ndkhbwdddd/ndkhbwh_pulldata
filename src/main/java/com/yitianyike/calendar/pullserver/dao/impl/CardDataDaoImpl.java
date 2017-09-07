@@ -288,7 +288,7 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"SELECT  cp.tree_id,ca.data_style as data_type  ,ca.alias FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cps_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND cp.channel_code=:channel_code AND ca.alias=:alias LIMIT 1");
+				"SELECT cp.tree_name, cp.tree_id,ca.data_style as data_type  ,ca.alias  FROM cps_anchor ca  INNER JOIN cps_scene_anchor csa ON ca.anchor_id = csa.anchor_id INNER JOIN cps_package cp ON cp.source_id =csa.scene_id   WHERE ca.history_id=0 AND csa.history_id=0 AND cp.history_id=0 AND ca.status=1 AND csa.status=1 AND cp.status=1  AND cp.data_type=1 AND cp.tab_id=1 AND  csa.column_type=0  AND cp.channel_code=:channel_code AND ca.alias=:alias LIMIT 1");
 		HashMap<String, String> hashMap = new HashMap<String, String>();
 		hashMap.put("channel_code", channel_code);
 		hashMap.put("alias", xz_name);
@@ -302,6 +302,7 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 						channeRelevance.setTree_id(rs.getInt("tree_id"));
 						channeRelevance.setData_type(rs.getInt("data_type"));
 						channeRelevance.setAlias_name(rs.getString("alias"));
+						channeRelevance.setTree_name(rs.getString("tree_name"));
 						return channeRelevance;
 					}
 				});
@@ -1176,6 +1177,33 @@ public class CardDataDaoImpl extends BaseDAO implements CardDataDao {
 		sb.append("insert into cps_logs_flush (channel_code, cache_key, cache_value,create_date) values(?, ?, ?, ?)");
 		Object[] objs = new Object[] { channel, key, value, new Date() };
 		this.getJdbcTemplate().update(sb.toString(), objs);
+	}
+
+	@Override
+	public List<TodayOnHistory> pressInMoreTodayOnHistory() {
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT day,month,year,des,pic,title,skip_url FROM `tms_past_today`  WHERE  source=0");
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+
+		List<TodayOnHistory> resultList = this.getNamedParameterJdbcTemplate().query(sql.toString(), hashMap,
+				new RowMapper<TodayOnHistory>() {
+					@Override
+					public TodayOnHistory mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+						TodayOnHistory th = new TodayOnHistory();
+						th.setDay(rs.getString("day"));
+						th.setDes(rs.getString("des"));
+						th.setMonth(rs.getString("month"));
+						th.setPic(rs.getString("pic"));
+						th.setSkip_url(rs.getString("skip_url"));
+						th.setTitle(rs.getString("title"));
+						th.setYear(rs.getString("year"));
+						return th;
+					}
+				});
+
+		return resultList;
 	}
 
 }

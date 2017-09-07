@@ -89,7 +89,8 @@ public class ControlDriveBOImpl implements ControlDriveBO {
 				todayData.put("week", controlDrive.getWeek());
 				todayData.put("xxweihao", controlDrive.getXxweihao());
 				todayData.put("unique_type", 0);
-
+				todayData.put("more", 0);
+				todayData.put("sub_aid", channeRelevance.getTree_id());
 				twoDate.add(todayData);
 				// tomorrow
 				String decreaseDate = DateUtil.getDecreaseDate(date);

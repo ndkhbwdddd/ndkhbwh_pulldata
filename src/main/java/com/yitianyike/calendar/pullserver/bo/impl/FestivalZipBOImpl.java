@@ -77,6 +77,8 @@ public class FestivalZipBOImpl implements FestivalZipBO {
 			}
 			mapZip.put("type", EnumConstants.FESTIVAL);
 			mapZip.put("data", list);
+			mapZip.put("more", 0);
+			mapZip.put("sub_aid", cr.getTree_id());
 			String almanacZipJsonString = JSONObject.toJSONString(mapZip);
 			String saveZipUrl = saveZip(channel_code, almanacZipJsonString);
 			cardDataDao.pressInZipUrl(channel_code, saveZipUrl, cr.getAlias_name(), cr.getTree_id());

@@ -82,6 +82,8 @@ public class PictureBOImpl implements PictureBO {
 					savaListMap.put("u1", picture.getSkip_url());
 					savaListMap.put("u2", picture2.getSkip_url());
 					savaListMap.put("u3", picture3.getSkip_url());
+					savaListMap.put("more", 0);
+					savaListMap.put("sub_aid", channeRelevance.getTree_id());
 					String jsonString = JSONObject.toJSONString(savaListMap);
 
 					DataCache dc = new DataCache();

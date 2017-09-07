@@ -185,6 +185,10 @@ public class BusinessHandler extends SimpleChannelInboundHandler<HttpObject> {
 				// 一天美图
 				new CardDataHandler(ctx, parmMap, content).pressInPicture();
 				return;
+			}else if ("/moreTodayOnHistory".equals(accessPath)) {
+				// 历史上的今天更多数据
+				new CardDataHandler(ctx, parmMap, content).pressInMoreTodayOnHistory();
+				return;
 			}
 			// } else if ("/videoList".equals(accessPath)) {
 			// 视频卡片数据

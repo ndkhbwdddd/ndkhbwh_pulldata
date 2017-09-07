@@ -390,4 +390,30 @@ public class CardDataHandler {
 
 	}
 
+	//历史上的今天更多
+	public void pressInMoreTodayOnHistory() {
+
+		List<DataCache> pressInTodayOnHistory = todayOnHistoryBO.pressInMoreTodayOnHistory(parmMap);
+		Map<String, Object> response = new HashMap<String, Object>();
+
+		// 显示返回
+		List<Map<String, String>> responseDatas = new ArrayList<Map<String, String>>();
+
+		for (DataCache dc : pressInTodayOnHistory) {
+			Map<String, String> rMap = new HashMap<String, String>();
+			rMap.put("key", dc.getKey());
+			rMap.put("field", dc.getField());
+			rMap.put("value", dc.getValue());
+			responseDatas.add(rMap);
+		}
+		response.put("mes", "success");
+		response.put("code", 0);
+		response.put("data", responseDatas);
+
+		FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, io.netty.handler.codec.http.HttpResponseStatus.OK,
+				Unpooled.wrappedBuffer(JSONObject.fromObject(response).toString().getBytes()));
+		ResponseGenerator.sendHttpResponse(ctx, res);
+
+	}
+
 }

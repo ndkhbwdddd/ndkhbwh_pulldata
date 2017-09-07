@@ -27,20 +27,8 @@ public interface CardDataDao {
 
 	List<Map<String, Object>> flushSportCardData(String channel_code);
 
-	/**
-	 * 查询最近比赛
-	 * 
-	 * @param paramMap
-	 * @return
-	 */
 	List<Map<String, Object>> getBasketBalls(Map<String, String> paramMap);
 
-	/**
-	 * 查询最近比赛
-	 * 
-	 * @param paramMap
-	 * @return
-	 */
 	List<Map<String, Object>> getFootBalls(Map<String, String> paramMap);
 
 	// 星座 v1
@@ -134,5 +122,8 @@ public interface CardDataDao {
 
 	// 写入刷新日志
 	void writLogs(String channel, String key, String value);
+
+	// more历史上的今天
+	List<TodayOnHistory> pressInMoreTodayOnHistory();
 
 }

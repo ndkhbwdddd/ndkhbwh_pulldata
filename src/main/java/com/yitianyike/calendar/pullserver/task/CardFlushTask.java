@@ -1,6 +1,5 @@
 package com.yitianyike.calendar.pullserver.task;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -317,7 +316,7 @@ public class CardFlushTask {
 	}
 
 	// 日历
-	@Scheduled(cron = "0 0/30 * * * ?")
+	@Scheduled(cron = "0 0/59 * * * ?")
 	public void flushAlmanacZip() {
 
 		List<String> channels = logBO.getChannels();
@@ -354,7 +353,7 @@ public class CardFlushTask {
 	}
 
 	// 节日
-	@Scheduled(cron = "0 0/30 * * * ?")
+	@Scheduled(cron = "0 0/59 * * * ?")
 	public void flushFestivalZip() {
 
 		List<String> channels = logBO.getChannels();

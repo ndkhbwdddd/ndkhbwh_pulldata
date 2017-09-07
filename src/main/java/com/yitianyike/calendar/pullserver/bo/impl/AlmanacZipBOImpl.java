@@ -72,6 +72,8 @@ public class AlmanacZipBOImpl implements AlmanacZipBO {
 
 			mapZip.put("type", EnumConstants.ALMANAC);
 			mapZip.put("data", list);
+			mapZip.put("more", 0);
+			mapZip.put("sub_aid", channeRelevance.getTree_id());
 
 			String almanacZipJsonString = JSONObject.toJSONString(mapZip);
 			String saveZipUrl = saveZip(channel_code, almanacZipJsonString);

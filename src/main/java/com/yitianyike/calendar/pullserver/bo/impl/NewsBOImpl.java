@@ -72,6 +72,8 @@ public class NewsBOImpl implements NewsBO {
 					savaJsonMap.put("unique_type", 1);
 					savaJsonMap.put("title", tree_name);
 					savaJsonMap.put("datas", saveList);
+					savaJsonMap.put("more", 1);
+					savaJsonMap.put("sub_aid", channeRelevance.getTree_id());
 
 					DataCache dc = new DataCache();
 					StringBuffer sb = new StringBuffer();
@@ -113,6 +115,8 @@ public class NewsBOImpl implements NewsBO {
 					savaJsonMap.put("unique_type", 1);
 					savaJsonMap.put("title", tree_name);
 					savaJsonMap.put("datas", saveList);
+					savaJsonMap.put("more", 1);
+					savaJsonMap.put("sub_aid", channeRelevance.getTree_id());
 					DataCache dc = new DataCache();
 					StringBuffer sb = new StringBuffer();
 					sb.append(channel_code).append("-").append(PropertiesUtil.version).append("-")
@@ -153,6 +157,8 @@ public class NewsBOImpl implements NewsBO {
 					savaJsonMap.put("unique_type", 1);
 					savaJsonMap.put("title", tree_name);
 					savaJsonMap.put("datas", saveList);
+					savaJsonMap.put("more", 1);
+					savaJsonMap.put("sub_aid", channeRelevance.getTree_id());
 					DataCache dc = new DataCache();
 					StringBuffer sb = new StringBuffer();
 					sb.append(channel_code).append("-").append(PropertiesUtil.version).append("-")
@@ -182,6 +188,8 @@ public class NewsBOImpl implements NewsBO {
 					savaJsonMap.put("unique_type", 1);
 					savaJsonMap.put("title", tree_name);
 					savaJsonMap.put("datas", saveList);
+					savaJsonMap.put("more", 1);
+					savaJsonMap.put("sub_aid", channeRelevance.getTree_id());
 					DataCache dc = new DataCache();
 					StringBuffer sb = new StringBuffer();
 					sb.append(channel_code).append("-").append(PropertiesUtil.version).append("-")
@@ -210,7 +218,8 @@ public class NewsBOImpl implements NewsBO {
 					savaJsonMap.put("unique_type", 1);
 					savaJsonMap.put("title", tree_name);
 					savaJsonMap.put("datas", saveList);
-
+					savaJsonMap.put("more", 1);
+					savaJsonMap.put("sub_aid", channeRelevance.getTree_id());
 					DataCache dc = new DataCache();
 					StringBuffer sb = new StringBuffer();
 					sb.append(channel_code).append("-").append(PropertiesUtil.version).append("-")
@@ -237,6 +246,8 @@ public class NewsBOImpl implements NewsBO {
 					savaJsonMap.put("unique_type", 1);
 					savaJsonMap.put("title", tree_name);
 					savaJsonMap.put("datas", saveList);
+					savaJsonMap.put("more", 1);
+					savaJsonMap.put("sub_aid", channeRelevance.getTree_id());
 					DataCache dc = new DataCache();
 					StringBuffer sb = new StringBuffer();
 					sb.append(channel_code).append("-").append(PropertiesUtil.version).append("-")
@@ -263,6 +274,8 @@ public class NewsBOImpl implements NewsBO {
 					savaJsonMap.put("unique_type", 1);
 					savaJsonMap.put("title", tree_name);
 					savaJsonMap.put("datas", saveList);
+					savaJsonMap.put("more", 1);
+					savaJsonMap.put("sub_aid", channeRelevance.getTree_id());
 					DataCache dc = new DataCache();
 					StringBuffer sb = new StringBuffer();
 					sb.append(channel_code).append("-").append(PropertiesUtil.version).append("-")
@@ -307,6 +320,8 @@ public class NewsBOImpl implements NewsBO {
 					savaJsonMap.put("unique_type", 1);
 					savaJsonMap.put("title", tree_name);
 					savaJsonMap.put("datas", saveList);
+					savaJsonMap.put("more", 1);
+					savaJsonMap.put("sub_aid", channeRelevance.getTree_id());
 					DataCache dc = new DataCache();
 					StringBuffer sb = new StringBuffer();
 					sb.append(channel_code).append("-").append(PropertiesUtil.version).append("-")
@@ -355,6 +370,8 @@ public class NewsBOImpl implements NewsBO {
 					savaJsonMap.put("unique_type", 1);
 					savaJsonMap.put("title", tree_name);
 					savaJsonMap.put("datas", saveList);
+					savaJsonMap.put("more", 1);
+					savaJsonMap.put("sub_aid", channeRelevance.getTree_id());
 					DataCache dc = new DataCache();
 					StringBuffer sb = new StringBuffer();
 					sb.append(channel_code).append("-").append(PropertiesUtil.version).append("-")
@@ -405,7 +422,8 @@ public class NewsBOImpl implements NewsBO {
 					savaJsonMap.put("unique_type", 1);
 					savaJsonMap.put("title", tree_name);
 					savaJsonMap.put("datas", saveList);
-
+					savaJsonMap.put("more", 1);
+					savaJsonMap.put("sub_aid", channeRelevance.getTree_id());
 					DataCache dc = new DataCache();
 					StringBuffer sb = new StringBuffer();
 					sb.append(channel_code).append("-").append(PropertiesUtil.version).append("-")
